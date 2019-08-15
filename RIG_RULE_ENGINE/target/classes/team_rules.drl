@@ -1,0 +1,28 @@
+package KieRule;
+import com.wipro.rtvs.Scm;
+import com.wipro.rtvs.Rtvs;
+import com.wipro.rule.ServiceMongo;
+import java.util.List;
+import com.wipro.rule.Team;
+import com.wipro.rule.Achievements;
+
+rule "RTVS"
+
+when
+rtvs:Rtvs(rigletName=="EDN141")
+then
+System.out.println("hello");
+end;
+
+rule "SCM"
+
+when
+scm:Scm(commitCount>2)
+p:Team()
+a:Achievements()
+then
+p.setPoints(p.getPoints()+10);
+a.setMetric("No. of commits per day");
+a.setReward(10);
+p.setAchievements(a);
+end;
